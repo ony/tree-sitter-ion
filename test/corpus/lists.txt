@@ -1,0 +1,21 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#list
+==================
+
+null.list         // A null list value
+[]                // An empty list value
+[1, 2, 3]         // List of three ints
+[ 1 , two ]       // List of an int and a symbol
+[a , [b]]         // Nested list
+[ 1.2, ]          // Trailing comma is legal in Ion (unlike JSON)
+
+---
+
+(document
+  (null (type)) (comment)
+  (list) (comment)
+  (list (number) (number) (number)) (comment)
+  (list (number) (symbol (identifier))) (comment)
+  (list (symbol (identifier)) (list (symbol (identifier)))) (comment)
+  (list (number)) (comment))
+

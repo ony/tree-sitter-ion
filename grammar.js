@@ -74,7 +74,7 @@ module.exports = grammar({
       $.escape,
     ),
 
-    list: $ => seq('[', sepBy($._value, token(',')), ']'),
+    list: $ => seq('[', sepBy($._value, ','), optional(','), ']'),
     sexp: $ => seq('(', repeat($._sexp_element), ')'),
     _sexp_element: $ => choice(
       $._value,
