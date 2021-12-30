@@ -50,7 +50,8 @@ module.exports = grammar({
 
     string: $ => choice(
       seq('"', repeat($._string_chunk), '"'),
-      // TODO: support for multi-line (long quoted) strings
+      // TODO: join multi-line strings together?
+      seq("'''", repeat($._string_long_chunk), "'''"),
     ),
     _string_chunk: $ => choice(
       token.immediate(/[^"\\\n]+/),
@@ -58,7 +59,7 @@ module.exports = grammar({
     ),
 
     _string_long_chunk: $ => choice(
-      token.immediate(/[^'\\\n]+/),
+      token.immediate(/[^'\\]+/),
       $.escape,
     ),
 
@@ -83,6 +84,7 @@ module.exports = grammar({
 
     escape: $ => choice(
       token.immediate(/\\[abtnfrv?0\'"/\\]/),
+      seq(token.immediate('\\'), $._nl),
       $.hex_escape,
       $.unicode_escape,
     ),
@@ -108,6 +110,7 @@ module.exports = grammar({
     ),
 
     _space: $ => /\s+/,
+    _nl: $ => token.immediate(/\r\n|\n|\n/),
     comment: $ => choice(
       seq('//', /[^\n\r]*/),
       seq('/*', /[^*]*(\*[^*/][^*]*)*/, '*/'),

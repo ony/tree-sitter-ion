@@ -19,3 +19,29 @@ xml::"<e a='v'>c</e>"  // String with type annotation 'xml'
   (string (escape)) (comment)
   (string (escape (unicode_escape))) (comment)
   (annotated (annotations (symbol (identifier))) (string)) (comment))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#string (long)
+==================
+
+( '''hello '''     // Sexp with one element
+  '''world!'''  )
+
+("hello world!")   // The exact same sexp value
+
+// This Ion value is a string containing three newlines. The serialized
+// form's first newline is escaped into nothingness.
+'''\
+The first line of the string.
+This is the second line of the string,
+and this is the third line.
+'''
+
+---
+
+(document
+  (sexp (string) (comment) (string))
+  (sexp (string)) (comment)
+  (comment)
+  (comment)
+  (string (escape)))
