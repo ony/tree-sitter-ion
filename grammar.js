@@ -13,7 +13,7 @@ module.exports = grammar({
       $.symbol,
       // TODO: $.blob,
       // TODO: $.clob,
-      // TODO: $.struct,
+      $.struct,
       $.list,
       $.sexp,
       $.annotated,
@@ -72,6 +72,13 @@ module.exports = grammar({
     _symbol_chunk: $ => choice(
       token.immediate(/[^'\\\n]+/),
       $.escape,
+    ),
+
+    struct: $ => seq('{', sepBy($.field, ','), optional(','), '}'),
+    field: $ => seq($._field_name, ':', $._value),
+    _field_name: $ => choice(
+      $.symbol,
+      $.string,
     ),
 
     list: $ => seq('[', sepBy($._value, ','), optional(','), ']'),

@@ -1,0 +1,46 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#struct
+==================
+
+null.struct                         // A null struct value
+{ }                                 // An empty struct value
+{ first : "Tom" , last: "Riddle" }  // Structure with two fields
+{"first":"Tom","last":"Riddle"}     // The same value with confusing style
+{center:{x:1.0, y:12.5}, radius:3}  // Nested struct
+{ x:1, }                            // Trailing comma is legal in Ion (unlike JSON)
+{ "":42 }                           // A struct value containing a field with an empty name
+{ x:1, x:null.int }                 // WARNING: repeated name 'x' leads to undefined behavior
+
+---
+
+(document
+  (null (type)) (comment)
+  (struct) (comment)
+  (struct
+    (field (symbol (identifier)) (string))
+    (field (symbol (identifier)) (string))) (comment)
+  (struct
+    (field (string) (string))
+    (field (string) (string))) (comment)
+  (struct
+    (field (symbol (identifier)) (struct (field (symbol (identifier)) (number)) (field (symbol (identifier)) (number))))
+    (field (symbol (identifier)) (number))) (comment)
+  (struct (field (symbol (identifier)) (number))) (comment)
+  (struct (field (string) (number))) (comment)
+  (struct
+    (field (symbol (identifier)) (number))
+    (field (symbol (identifier)) (null (type)))) (comment))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#struct (errors)
+==================
+
+{ x:1, , }                          // ERROR: missing field between commas
+
+---
+
+(document
+  (struct
+    (field (symbol (identifier)) (number))
+    (ERROR))
+  (comment))
