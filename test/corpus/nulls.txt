@@ -1,0 +1,53 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#null
+==================
+
+null
+null.null       // Identical to unadorned null
+null.bool
+null.int
+null.float
+null.decimal
+null.timestamp
+null.string
+null.symbol
+null.blob
+null.clob
+null.struct
+null.list
+null.sexp
+
+---
+
+(document
+  (null)
+  (null (type)) (comment)
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type))
+  (null (type)))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#null (escapes)
+==================
+
+null        // The type is null
+'null'      // The type is symbol
+null.list   // The type is list
+'null.int'  // The type is symbol
+
+---
+
+(document
+  (null) (comment)
+  (symbol) (comment)
+  (null (type)) (comment)
+  (symbol) (comment))

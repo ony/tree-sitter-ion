@@ -1,0 +1,58 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#symbol
+==================
+
+null.symbol  // A null symbol value
+'myVar2'     // A symbol
+myVar2       // The same symbol
+myvar2       // A different symbol
+'hi ho'      // Symbol requiring quotes
+'\'ahoy\''   // A symbol with embedded quotes
+''           // The empty symbol
+
+---
+
+(document
+  (null (type)) (comment)
+  (symbol) (comment)
+  (symbol (identifier)) (comment)
+  (symbol (identifier)) (comment)
+  (symbol) (comment)
+  (symbol (escape) (escape)) (comment)
+  (symbol) (comment))
+
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#symbol (S-exps)
+==================
+
+( 'x' '+' 'y' )  // S-expression with three symbols
+( x + y )        // The same three symbols
+(x+y)            // The same three symbols
+(a==b&&c==d)     // S-expression with seven symbols
+
+---
+
+(document
+  (sexp (symbol) (symbol) (symbol)) (comment)
+  (sexp (symbol (identifier)) (symbol (operator)) (symbol (identifier))) (comment)
+  (sexp (symbol (identifier)) (symbol (operator)) (symbol (identifier))) (comment)
+  (sexp
+    (symbol (identifier))
+    (symbol (operator))
+    (symbol (identifier))
+    (symbol (operator))
+    (symbol (identifier))
+    (symbol (operator))
+    (symbol (identifier))) (comment))
+
+
+==================
+Symbol table references (TODO: check docs)
+==================
+
+$42
+
+---
+
+(document (symbol (symbol_ref)))

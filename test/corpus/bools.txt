@@ -1,0 +1,14 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#bool
+==================
+
+null.bool
+true
+false
+
+---
+
+(document
+  (null (type))
+  (bool)
+  (bool))

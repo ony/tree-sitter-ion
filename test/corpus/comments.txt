@@ -1,0 +1,33 @@
+==================
+Spaces and comments
+==================
+
+// line comment
+	// tab
+    // spaces
+
+// new-line (EOL)
+
+// dos-like EOL
+/* one-line of multi-line comment */
+/* simple
+   multi-line comment
+ */
+/*                    *
+ * multi-line comment *
+ *                    */
+
+/* As per ANTLR grammer we can include /* and // inside of comment block without any meaning */
+
+---
+
+(document
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment))

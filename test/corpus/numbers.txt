@@ -1,0 +1,67 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#int
+==================
+
+null.int   // A null int value
+0          // Zero.  Surprise!
+-0         //   ...the same value with a minus sign
+123        // A normal int
+-123       // Another negative int
+0xBeef     // An int denoted in hexadecimal
+0b0101     // An int denoted in binary
+1_2_3      // An int with underscores
+0xFA_CE    // An int denoted in hexadecimal with underscores
+0b10_10_10 // An int denoted in binary with underscores
+
+---
+
+(document
+  (null (type)) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#real-numbers
+==================
+
+null.decimal      // A null decimal value
+null.float        // A null float value
+
+0.123             // Type is decimal
+-0.12e4           // Type is float
+-0.12d4           // Type is decimal
+
+0E0               // Zero as float
+0D0               // Zero as decimal
+0.                //   ...the same decimal value with different notation
+-0e0              // Negative zero float   (distinct from positive zero)
+-0d0              // Negative zero decimal (distinct from positive zero)
+-0.               //   ...the same decimal value with different notation
+-0d-1             // Decimal maintains precision: -0. != -0.0
+
+123_456.789_012   // Decimal with underscores
+
+---
+
+
+(document
+  (null (type)) (comment)
+  (null (type)) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment)
+  (number) (comment))

@@ -1,0 +1,27 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#sexp
+==================
+
+null.sexp         // A null S-expression value
+()                // An empty expression value
+(cons 1 2)        // S-expression of three values
+([hello][there])  // S-expression containing two lists
+
+(a+-b)  ( 'a' '+-' 'b' )    // Equivalent; three symbols
+(a.b;)  ( 'a' '.' 'b' ';')  // Equivalent; four symbols
+
+---
+
+(document
+  (null (type)) (comment)
+  (sexp) (comment)
+  (sexp (symbol (identifier)) (number) (number)) (comment)
+  (sexp (list (symbol (identifier))) (list (symbol (identifier)))) (comment)
+
+  (sexp (symbol (identifier)) (symbol (operator)) (symbol (identifier)))
+  (sexp (symbol) (symbol) (symbol))
+  (comment)
+
+  (sexp (symbol (identifier)) (symbol (operator)) (symbol (identifier)) (symbol (operator)))
+  (sexp (symbol) (symbol) (symbol) (symbol))
+  (comment))
