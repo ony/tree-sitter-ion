@@ -21,7 +21,7 @@ null.sexp
 
 (document
   (null)
-  (null (type)) (comment)
+  (null) (comment)
   (null (type))
   (null (type))
   (null (type))

@@ -21,7 +21,7 @@ module.exports = grammar({
     annotated: $ => seq($.annotations, $._value),
     annotations: $ => prec.left(repeat1(seq($.symbol, '::'))),
 
-    null: $ => seq('null', optional(seq('.', $.type))),
+    null: $ => seq('null', optional(seq('.', choice($.type, 'null')))),
     bool: $ => choice('true', 'false'),
 
     number: $ => choice(
@@ -93,7 +93,6 @@ module.exports = grammar({
     operator: $ => /[!#%&*+./;<=>?@^`|~-]+/,
 
     type: $ => choice(
-      'null',
       'bool',
       'int',
       'float',
