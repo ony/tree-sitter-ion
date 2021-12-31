@@ -56,7 +56,7 @@ module.exports = grammar({
       const date = seq(year, '-', month, '-', day);
       const hour = /[01][0-9]|2[0-3]/;
       const min = /[0-5][0-9]/;
-      const second = /[0-5][0-9](\.[0-9]+)?/;
+      const second = /[0-5][0-9](\.[0-9]+)?|60/;  // allow leap second?
       const offset = choice('Z', seq(/[+-]/, hour, ':', min));
       const time = seq(hour, ':', min, optional(seq(':', second)), offset);
 
