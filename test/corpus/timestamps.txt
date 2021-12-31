@@ -1,0 +1,44 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#timestamp
+==================
+
+null.timestamp                   // A null timestamp value
+
+2007-02-23T12:14Z                // Seconds are optional, but local offset is not
+2007-02-23T12:14:33.079-08:00    // A timestamp with millisecond precision and PST local time
+2007-02-23T20:14:33.079Z         // The same instant in UTC ("zero" or "zulu")
+2007-02-23T20:14:33.079+00:00    // The same instant, with explicit local offset
+2007-02-23T20:14:33.079-00:00    // The same instant, with unknown local offset
+
+2007-01-01T00:00-00:00           // Happy New Year in UTC, unknown local offset
+2007-01-01                       // The same instant, with days precision, unknown local offset
+2007-01-01T                      //    The same value, different syntax.
+2007-01T                         // The same instant, with months precision, unknown local offset
+2007T                            // The same instant, with years precision, unknown local offset
+
+2007-02-23                       // A day, unknown local offset 
+2007-02-23T00:00Z                // The same instant, but more precise and in UTC
+2007-02-23T00:00+00:00           // An equivalent format for the same value
+2007-02-23T00:00:00-00:00        // The same instant, with seconds precision
+
+---
+
+(document
+  (null (type)) (comment)
+
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment)
+  (timestamp) (comment))

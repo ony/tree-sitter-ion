@@ -8,7 +8,7 @@ module.exports = grammar({
       $.null,
       $.bool,
       $.number,
-      // TODO: $.timestamp,
+      $.timestamp,
       $.string,
       $.symbol,
       // TODO: $.blob,
@@ -47,6 +47,24 @@ module.exports = grammar({
 
     infinity: $ => /[+-]inf/,
     not_a_number: $ => 'nan',
+
+    timestamp: $ => {
+      // rule out obviously wrong representations
+      const year = /0{3}[1-9]|0{2}[1-9][0-9]|0[1-9][0-9]{2}|[1-9][0-9]{3}/;
+      const month = /0[1-9]|1[0-2]/;
+      const day = /0[1-9]|[12][0-9]|3[01]/;
+      const date = seq(year, '-', month, '-', day);
+      const hour = /[01][0-9]|2[0-3]/;
+      const min = /[0-5][0-9]/;
+      const second = /[0-5][0-9](\.[0-9]+)?/;
+      const offset = choice('Z', seq(/[+-]/, hour, ':', min));
+      const time = seq(hour, ':', min, optional(seq(':', second)), offset);
+
+      return token(choice(
+        seq(date, optional(seq('T', optional(time)))),
+        seq(year, optional(seq('-', month)), 'T'),
+      ))
+    },
 
     string: $ => choice(
       seq('"', repeat($._string_chunk), '"'),
