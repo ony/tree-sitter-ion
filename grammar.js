@@ -93,7 +93,7 @@ module.exports = grammar({
     ),
 
     struct: $ => seq('{', sepBy($.field, ','), optional(','), '}'),
-    field: $ => seq($._field_name, ':', $._value),
+    field: $ => seq(field('key', $._field_name), ':', field('value', $._value)),
     _field_name: $ => choice(
       $.symbol,
       $.string,
