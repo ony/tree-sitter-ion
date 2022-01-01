@@ -11,8 +11,8 @@ module.exports = grammar({
       $.timestamp,
       $.string,
       $.symbol,
-      // TODO: $.blob,
-      // TODO: $.clob,
+      $.blob,
+      $.clob,
       $.struct,
       $.list,
       $.sexp,
@@ -67,14 +67,17 @@ module.exports = grammar({
     },
 
     string: $ => choice(
-      seq('"', repeat($._string_chunk), '"'),
-      // TODO: join multi-line strings together?
-      seq("'''", repeat($._string_long_chunk), "'''"),
+      $._string_short,
+      $._string_long,
     ),
+    _string_short: $ => seq('"', repeat($._string_chunk), '"'),
     _string_chunk: $ => choice(
       token.immediate(/[^"\\\n]+/),
       $.escape,
     ),
+
+    // TODO: join multi-line strings together?
+    _string_long: $ => seq("'''", repeat($._string_long_chunk), "'''"),
 
     _string_long_chunk: $ => choice(
       token.immediate(/[^'\\]+/),
@@ -90,6 +93,18 @@ module.exports = grammar({
     _symbol_chunk: $ => choice(
       token.immediate(/[^'\\\n]+/),
       $.escape,
+    ),
+
+    // TODO: forbid comments
+    // TODO: ensure padding/bits alignment
+    blob: $ => seq('{{', repeat1(/[A-Za-z0-9+/]+={0,3}/), '}}'),
+
+    // TODO: forbid comments
+    // TODO: limit to 7-bit strings (including own escape)
+    clob: $ => seq('{{', $._clob_content, '}}'),
+    _clob_content: $ => choice(
+      $._string_short,
+      repeat1($._string_long),
     ),
 
     struct: $ => seq('{', sepBy($.field, ','), optional(','), '}'),

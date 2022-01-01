@@ -8,6 +8,8 @@
   (infinity)
   (not_a_number)
   (timestamp)
+  (blob)
+  (clob)
 ] @number
 
 (field key: (symbol) @property)
@@ -37,5 +39,7 @@
 (struct "{" @punctuation.bracket (_) "}" @punctuation.bracket)
 (struct "," @punctuation.delimiter)
 (field ":" @punctuation.special)
+(blob "{{" @punctuation.bracket "}}" @punctuation.bracket)
+(clob "{{" @punctuation.bracket "}}" @punctuation.bracket)
 
 (ERROR) @error

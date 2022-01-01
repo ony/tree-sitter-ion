@@ -1,0 +1,53 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#blob
+==================
+
+// A null blob value
+null.blob
+
+// A valid blob value with zero padding characters.
+{{
+  +AB/
+}}
+
+// A valid blob value with one required padding character.
+{{ VG8gaW5maW5pdHkuLi4gYW5kIGJleW9uZCE= }}
+
+// A valid blob value with two required padding characters.
+{{ dHdvIHBhZGRpbmcgY2hhcmFjdGVycw== }}
+
+---
+
+(document
+  (comment)
+  (null (type))
+
+  (comment)
+  (blob)
+
+  (comment)
+  (blob)
+
+  (comment)
+  (blob))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#clob
+==================
+
+null.clob  // A null clob value
+
+{{ "This is a CLOB of text." }}
+
+shift_jis ::
+{{
+  '''Another clob with user-defined encoding, '''
+  '''this time on multiple lines.'''
+}}
+
+---
+
+(document
+  (null (type)) (comment)
+  (clob)
+  (annotated (annotations (symbol (identifier))) (clob)))
