@@ -6,17 +6,32 @@
 
   outputs = { self, nixpkgs, utils }:
     let out = system:
-      let pkgs = nixpkgs.legacyPackages."${system}";
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ self.overlay ];
+        };
+        grammar = pkgs.tree-sitter-grammars.tree-sitter-ion;
       in
       {
-
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            nodejs
-            tree-sitter
+          packages = with pkgs; [
+            # extra dev tools
           ];
+          inputsFrom = with pkgs; [ grammar ];
         };
 
-      }; in with utils.lib; eachSystem defaultSystems out;
+        packages = {
+          tree-sitter-grammars.tree-sitter-ion = grammar;
+        };
+        defaultPackage = grammar;
+      };
+    in
+    with utils.lib;
+    {
+      overlay = final: prev: {
+        tree-sitter-grammars.tree-sitter-ion = final.callPackage ./ion-grammar.nix { };
+      };
+    } // eachSystem defaultSystems out;
 
 }
