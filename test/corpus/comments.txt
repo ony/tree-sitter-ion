@@ -1,33 +1,124 @@
 ==================
-Spaces and comments
+Simple line comment
 ==================
 
-// line comment
+41
+// 42 - commented out
+43
+
+---
+
+(document (number) (comment) (number))
+
+==================
+Spaces and tabs
+==================
+
 	// tab
     // spaces
-
 // new-line (EOL)
 
 // dos-like EOL
-/* one-line of multi-line comment */
-/* simple
-   multi-line comment
- */
-/*                    *
- * multi-line comment *
- *                    */
 
-/* As per ANTLR grammer we can include /* and // inside of comment block without any meaning */
+---
+
+(document (comment) (comment) (comment) (comment))
+
+==================
+Simple multi-line comments
+==================
+
+/* one-line of multi-line comment */
+41 /* abc */ 43
+/*
+ abc
+ */
+45
+
+---
+
+(document (comment) (number) (comment) (number) (comment) (number))
+
+==================
+Ignore subsequent comment starts within active multi-line one as per ANTLR
+==================
+
+(41 /* abc /* def */ 43 */ 44)
+41 /* abc // def */ 43
 
 ---
 
 (document
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment))
+  (sexp (number) (comment) (number) (symbol (operator)) (number))
+  (number) (comment) (number))
+
+==================
+Ignore subsequent comment starts within active one-line one
+==================
+
+(
+  41 // abc /*
+  42
+  43 // def */
+)
+
+---
+
+(document
+  (sexp (number) (comment) (number) (number) (comment)))
+
+==================
+Empty multi-line comment
+==================
+
+/**/
+
+---
+
+(document (comment))
+
+==================
+Star-line
+==================
+
+/***/
+
+---
+
+(document (comment))
+
+==================
+Multi-line comment with vertical star-walls
+==================
+
+/*                    *
+ * multi-line comment *
+ *                    */
+
+---
+
+(document (comment))
+
+==================
+Multi-line comment with horizontal star-floors
+==================
+
+/**********************************
+   yet another multi-line comment
+ **********************************/
+
+---
+
+(document (comment))
+
+==================
+Multi-line comment with star-boxes
+==================
+
+/**********************************
+ * yet another multi-line comment *
+ **********************************/
+
+---
+
+(document (comment))

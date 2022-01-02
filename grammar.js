@@ -132,6 +132,8 @@ module.exports = grammar({
     unicode_escape: $ => token.immediate(/\\(u|U000[0-9A-Fa-f]|U0010)[0-9A-Fa-f]{4}/),
 
     identifier: $ => /[$_a-zA-Z][$_a-zA-Z0-9]*/,
+
+    // TODO: should restrict comment starts? (e.g. (3 // 4) and (/* 6 2 3))
     operator: $ => /[!#%&*+./;<=>?@^`|~-]+/,
 
     type: $ => choice(
@@ -153,7 +155,7 @@ module.exports = grammar({
     _nl: $ => token.immediate(/\r\n|\n|\n/),
     comment: $ => choice(
       seq('//', /[^\n\r]*/),
-      seq('/*', /[^*]*(\*[^*/][^*]*)*/, '*/'),
+      seq('/*', /([^*]|\*+[^*/])*\*+\//),
     ),
   },
 
