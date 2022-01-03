@@ -27,26 +27,30 @@ module.exports = grammar({
     null: $ => seq('null', optional(seq('.', choice($.type, 'null')))),
     bool: $ => choice('true', 'false'),
 
-    number: $ => choice(
-      $._int,
-      $._real,
-    ),
-    _int: $ => choice(
-      $._dec_integer,
-      /0x[0-9A-Fa-f](_?[0-9A-Fa-f])*/,
-      /0b[01](_?[01])*/,
-    ),
-    _real: $ => choice(
-      $.infinity,
-      $.not_a_number,
-      seq($._dec_integer, $._dec_frac, optional($._dec_exp)),
-      seq($._dec_integer, $._dec_exp),
-    ),
+    number: $ => {
+      const _dec_unsigned = token.immediate(/0|[1-9](_?[0-9])*/);
+      const _dec_frac = token.immediate(/\.([0-9](_?[0-9])*)?/);
+      const _dec_exp = token.immediate(/[eEdD][+-]?[0-9]+/);
+      const _dec_integer = seq(optional('-'), _dec_unsigned);
 
-    _dec_integer: $ => seq(optional('-'), $._dec_unsigned),
-    _dec_unsigned: $ => token.immediate(/0|[1-9](_?[0-9])*/),
-    _dec_frac: $ => token.immediate(/\.([0-9](_?[0-9])*)?/),
-    _dec_exp: $ => token.immediate(/[eEdD][+-]?[0-9]+/),
+      const _int = choice(
+        token(_dec_integer),
+        /0x[0-9A-Fa-f](_?[0-9A-Fa-f])*/,
+        /0b[01](_?[01])*/,
+      );
+
+      const _real = choice(
+        $.infinity,
+        $.not_a_number,
+        token(seq(_dec_integer, _dec_frac, optional(_dec_exp))),
+        token(seq(_dec_integer, _dec_exp)),
+      );
+
+      return choice(
+        _int,
+        _real,
+      );
+    },
 
     infinity: $ => /[+-]inf/,
     not_a_number: $ => 'nan',
@@ -165,6 +169,17 @@ module.exports = grammar({
   extras: $ => [
     $._space,
     $.comment,
+  ],
+
+  supertypes: $ => [
+    $._value,
+  ],
+
+  inline: $ => [
+    $._string_short,
+    $._string_long,
+    $._string_chunk,
+    $._string_long_chunk,
   ],
 });
 
