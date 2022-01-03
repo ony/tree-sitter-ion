@@ -18,7 +18,7 @@ xml::"<e a='v'>c</e>"  // String with type annotation 'xml'
   (string) (comment)
   (string (escape)) (comment)
   (string (escape (unicode_escape))) (comment)
-  (annotated (annotations (symbol (identifier))) (string)) (comment))
+  (annotated annotation: (symbol (identifier)) value: (string)) (comment))
 
 ==================
 https://amzn.github.io/ion-docs/docs/spec.html#string (long)

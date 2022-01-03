@@ -29,7 +29,7 @@
 (clob) @string.special
 
 (field key: (_) @field)
-(annotations (symbol) @annotation)
+(_ annotation: (symbol) @annotation)
 
 ((symbol) @constant.builtin
  (#match? @constant.builtin "^\\$"))
@@ -41,9 +41,9 @@
 
 (document
   (annotated
-    (annotations
+    annotation:
       ((symbol) @label
-       (#match? @label "^\\$(ion_(shared_)?symbol_table|2|3|9)$")))
+       (#match? @label "^\\$(ion_(shared_)?symbol_table|2|3|9)$"))
       (struct)))
 
 ; Punctuations
@@ -53,7 +53,7 @@
 (struct [ "{" "}" ] @punctuation.bracket)
 (struct "," @punctuation.delimiter)
 (field ":" @punctuation.special)
-(annotations "::" @punctuation.special)
+(_ annotation: "::" @punctuation.special)
 (blob [ "{{" "}}" ] @punctuation.bracket)
 (clob [ "{{" "}}" ] @punctuation.bracket)
 

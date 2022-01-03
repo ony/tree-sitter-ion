@@ -18,8 +18,11 @@ module.exports = grammar({
       $.sexp,
       $.annotated,
     ),
-    annotated: $ => seq($.annotations, $._value),
-    annotations: $ => prec.left(repeat1(seq($.symbol, '::'))),
+
+    annotated: $ => seq(
+      field('annotation', seq($.symbol, '::')),
+      field('value', $._value),
+    ),
 
     null: $ => seq('null', optional(seq('.', choice($.type, 'null')))),
     bool: $ => choice('true', 'false'),

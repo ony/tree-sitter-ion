@@ -50,4 +50,4 @@ shift_jis ::
 (document
   (null (type)) (comment)
   (clob)
-  (annotated (annotations (symbol (identifier))) (clob)))
+  (annotated annotation: (symbol (identifier)) value: (clob)))

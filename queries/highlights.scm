@@ -12,9 +12,8 @@
   (clob)
 ] @number
 
-(field key: (symbol) @property)
-(field key: (string) @property)
-(annotations (symbol) @type)
+(field key: (_) @property)
+(_ annotation: _ @type)
 
 ((symbol) @constant.builtin
  (#match? @constant.builtin "^\\$"))
@@ -24,10 +23,7 @@
 (string) @string
 (escape) @string.special
 
-[
- (type)
- (annotations)
-] @type
+(type) @type
 
 (comment) @comment
 (operator) @operator

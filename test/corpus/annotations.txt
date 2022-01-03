@@ -1,0 +1,48 @@
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#annot
+==================
+
+int32::12                                // Suggests 32 bits as end-user type
+degrees::'celsius'::100                  // You can have multiple annotaions on a value
+'my.custom.type' :: { x : 12 , y : -1 }  // Gives a struct a user-defined type
+
+{ field: some_annotation::value }        // Field's name must precede annotations of its value
+
+jpeg :: {{ AA== }}                       // Indicates the blob contains jpeg data
+bool :: null.int                         // A very misleading annotation on the integer null
+'' :: 1                                  // An empty annotation
+
+---
+
+(document
+  (annotated annotation: (symbol (identifier)) value: (number)) (comment)
+  (annotated annotation: (symbol (identifier))
+    value: (annotated annotation: (symbol) value: (number))) (comment)
+  (annotated annotation: (symbol)
+    value: (struct
+      (field key: (symbol (identifier)) value: (number))
+      (field key: (symbol (identifier)) value: (number)))) (comment)
+
+  (struct
+    (field
+      key: (symbol (identifier))
+      value:
+        (annotated
+          annotation: (symbol (identifier))
+          value: (symbol (identifier)))))
+  (comment)
+
+  (annotated annotation: (symbol (identifier)) value: (blob)) (comment)
+  (annotated annotation: (symbol (identifier)) value: (null (type))) (comment)
+  (annotated annotation: (symbol) value: (number)) (comment))
+
+==================
+https://amzn.github.io/ion-docs/docs/spec.html#annot (bad annotation)
+==================
+
+null.symbol :: 1                         // ERROR: type annotation cannot be null
+
+---
+
+(document
+  (null (type)) (ERROR) (number) (comment))
