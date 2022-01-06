@@ -32,7 +32,7 @@ null.struct                         // A null struct value
     (field (symbol (identifier)) (null (type)))) (comment))
 
 ==================
-https://amzn.github.io/ion-docs/docs/spec.html#struct (errors)
+https://amzn.github.io/ion-docs/docs/spec.html#struct (double comma after field - TODO: recovery)
 ==================
 
 { x:1, , }                          // ERROR: missing field between commas
@@ -40,7 +40,17 @@ https://amzn.github.io/ion-docs/docs/spec.html#struct (errors)
 ---
 
 (document
-  (struct
-    (field (symbol (identifier)) (number))
-    (ERROR))
-  (comment))
+  (ERROR
+    (field (symbol (identifier)) (number))))
+
+==================
+Empty struct with just comma (TODO: recovery)
+==================
+
+41
+{ , }
+42
+
+---
+
+(document (number) (ERROR))

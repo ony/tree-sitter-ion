@@ -79,7 +79,7 @@ module.exports = grammar({
     ),
     _string_short: $ => seq('"', repeat($._string_chunk), '"'),
     _string_chunk: $ => choice(
-      token.immediate(/[^"\\\n]+/),
+      token.immediate(prec(1, /[^"\\\n]+/)),
       $.escape,
     ),
 
@@ -87,7 +87,7 @@ module.exports = grammar({
     _string_long: $ => seq("'''", repeat($._string_long_chunk), "'''"),
 
     _string_long_chunk: $ => choice(
-      token.immediate(/[^'\\]+/),
+      token.immediate(prec(1, /[^'\\]+/)),
       $.escape,
     ),
 
@@ -96,9 +96,9 @@ module.exports = grammar({
       seq("'", repeat($._symbol_chunk), "'"),
       $.identifier,
     ),
-    symbol_ref: $ => /\$[1-9][0-9]+/,
+    symbol_ref: $ => /\$[1-9][0-9]*/,
     _symbol_chunk: $ => choice(
-      token.immediate(/[^'\\\n]+/),
+      token.immediate(prec(1, /[^'\\\n]+/)),
       $.escape,
     ),
 
@@ -114,14 +114,14 @@ module.exports = grammar({
       repeat1($._string_long),
     ),
 
-    struct: $ => seq('{', sepBy($.field, ','), optional(','), '}'),
+    struct: $ => seq('{', sepOptEndBy($.field, ','), '}'),
     field: $ => seq(field('key', $._field_name), ':', field('value', $._value)),
     _field_name: $ => choice(
       $.symbol,
       $.string,
     ),
 
-    list: $ => seq('[', sepBy($._value, ','), optional(','), ']'),
+    list: $ => seq('[', sepOptEndBy($._value, ','), ']'),
     sexp: $ => seq('(', repeat($._sexp_element), ')'),
     _sexp_element: $ => choice(
       $._value,
@@ -131,7 +131,7 @@ module.exports = grammar({
 
     escape: $ => choice(
       token.immediate(/\\[abtnfrv?0\'"/\\]/),
-      seq(token.immediate('\\'), $._nl),
+      token.immediate(/\\(\r\n|\n)/),
       $.hex_escape,
       $.unicode_escape,
     ),
@@ -160,10 +160,10 @@ module.exports = grammar({
 
     _space: $ => /\s+/,
     _nl: $ => token.immediate(/\r\n|\n|\n/),
-    comment: $ => choice(
-      seq('//', /[^\n\r]*/),
+    comment: $ => token(choice(
+      /\/\/[^\n\r]*/,
       seq('/*', /([^*]|\*+[^*/])*\*+\//),
-    ),
+    )),
   },
 
   extras: $ => [
@@ -189,4 +189,12 @@ function sepBy1(a, sep) {
 
 function sepBy(a, sep) {
   return optional(sepBy1(a, sep));
+}
+
+function sepEndBy(a, sep) {
+  return repeat(seq(a, sep));
+}
+
+function sepOptEndBy(a, sep) {
+  return optional(seq(sepBy1(a, sep), optional(sep)));
 }

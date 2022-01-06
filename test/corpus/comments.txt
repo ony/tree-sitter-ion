@@ -71,11 +71,48 @@ Ignore subsequent comment starts within active one-line one
 Empty multi-line comment
 ==================
 
-/**/
+41 /**/ 42
 
 ---
 
-(document (comment))
+(document (number) (comment) (number))
+
+==================
+Empty single-line comment
+==================
+
+41 //
+42
+
+---
+
+(document (number) (comment) (number))
+
+==================
+Comment inside of string ignored
+==================
+
+"a // b"
+"a /* b"
+"unexpected \\// case"
+"unexpected \\/* case"
+
+---
+
+(document (string) (string) (string (escape)) (string (escape)))
+
+==================
+Comment inside of symbol ignored
+==================
+
+'a // b'
+'a /* b'
+'unexpected \\// case'
+'unexpected \\/* case'
+
+---
+
+(document (symbol) (symbol) (symbol (escape)) (symbol (escape)))
 
 ==================
 Star-line
