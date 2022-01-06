@@ -30,7 +30,12 @@
     with utils.lib;
     {
       overlay = final: prev: {
-        tree-sitter-grammars.tree-sitter-ion = final.callPackage ./ion-grammar.nix { };
+        tree-sitter-grammars = prev.tree-sitter-grammars // {
+          tree-sitter-ion = final.callPackage ./ion-grammar.nix { };
+        };
+        vimPlugins = prev.vimPlugins // {
+          nvim-treesitter-ion = final.callPackage ./nvim-plugin.nix { };
+        };
       };
     } // eachSystem defaultSystems out;
 
