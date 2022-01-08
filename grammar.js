@@ -158,16 +158,15 @@ module.exports = grammar({
       'struct',
     ),
 
-    _space: $ => /\s+/,
     _nl: $ => token.immediate(/\r\n|\n|\n/),
-    comment: $ => token(choice(
+    comment: $ => choice(
       /\/\/[^\n\r]*/,
-      seq('/*', /([^*]|\*+[^*/])*\*+\//),
-    )),
+      seq('/*', /([^*]|\*+[^*/])*/, alias(/\*+\//, '*/')),
+    ),
   },
 
   extras: $ => [
-    $._space,
+    /\s+/,
     $.comment,
   ],
 

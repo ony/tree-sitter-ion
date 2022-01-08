@@ -45,4 +45,4 @@ null.symbol :: 1                         // ERROR: type annotation cannot be nul
 ---
 
 (document
-  (null (type)) (annotated annotation: (symbol (MISSING symbol_ref)) value: (number)) (comment))
+  (null (type)) (ERROR) (number) (comment))
