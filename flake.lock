@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "nixony": {
+      "inputs": {
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775873537,
+        "narHash": "sha256-uYyR1PBkhLxUQ5Qluh7XY48dcM6RmccypvuTh+hzNIk=",
+        "owner": "ony",
+        "repo": "nixony",
+        "rev": "d5535575bfd287ed8ff8ad00c309be57f8f45b78",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ony",
+        "repo": "nixony",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1775868288,
@@ -17,6 +40,7 @@
     },
     "root": {
       "inputs": {
+        "nixony": "nixony",
         "nixpkgs": "nixpkgs",
         "utils": "utils"
       }

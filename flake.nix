@@ -2,10 +2,20 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
     utils.url = "github:numtide/flake-utils";
+
+    nixony.url = "github:ony/nixony";
+    nixony.inputs.nixpkgs.follows = "nixpkgs";
+    nixony.inputs.flake-utils.follows = "utils";
   };
 
-  outputs = { self, nixpkgs, utils }:
-    let out = system:
+  outputs = { self, nixpkgs, utils, nixony }:
+    let
+      pkgDefs = nixony.lib.mkPkgDefs (final0: {
+        tree-sitter-grammars.tree-sitter-ion = final0.callPackage ./ion-grammar.nix { };
+        vimPlugins.nvim-treesitter-ion = final0.callPackage ./nvim-plugin.nix { };
+      });
+
+      out = system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -21,22 +31,12 @@
           inputsFrom = with pkgs; [ grammar ];
         };
 
-        packages = {
-          tree-sitter-grammars.tree-sitter-ion = grammar;
-        };
+        packages = pkgDefs.toFlatPackages pkgs;
         defaultPackage = grammar;
       };
     in
     with utils.lib;
     {
-      overlay = final: prev: {
-        tree-sitter-grammars = prev.tree-sitter-grammars // {
-          tree-sitter-ion = final.callPackage ./ion-grammar.nix { };
-        };
-        vimPlugins = prev.vimPlugins.extend (_final: _prev: {
-          nvim-treesitter-ion = final.callPackage ./nvim-plugin.nix { };
-        });
-      };
+      overlay = pkgDefs.toOverlay;
     } // eachSystem defaultSystems out;
-
 }
