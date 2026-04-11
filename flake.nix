@@ -33,9 +33,9 @@
         tree-sitter-grammars = prev.tree-sitter-grammars // {
           tree-sitter-ion = final.callPackage ./ion-grammar.nix { };
         };
-        vimPlugins = prev.vimPlugins // {
+        vimPlugins = prev.vimPlugins.extend (_final: _prev: {
           nvim-treesitter-ion = final.callPackage ./nvim-plugin.nix { };
-        };
+        });
       };
     } // eachSystem defaultSystems out;
 
