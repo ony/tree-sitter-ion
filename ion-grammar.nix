@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   preBuild = ''
     ln -s "$src/grammar.js" ./
     ln -s "$src/test" ./
-    ${tree-sitter}/bin/tree-sitter generate --no-bindings
+    ${tree-sitter}/bin/tree-sitter generate
     HOME="$PWD/fake-home" ${tree-sitter}/bin/tree-sitter test
   '';
 
