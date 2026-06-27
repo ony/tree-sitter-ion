@@ -1,6 +1,5 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
     utils.url = "github:numtide/flake-utils";
 
     nixony.url = "github:ony/nixony";
@@ -33,6 +32,7 @@
 
         packages = pkgDefs.toFlatPackages pkgs;
         defaultPackage = grammar;
+        checks = pkgDefs.toFlatPackages pkgs;
       };
     in
     with utils.lib;
