@@ -19,7 +19,7 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlay ];
+          overlays = [ self.overlays.default ];
         };
         grammar = pkgs.tree-sitter-grammars.tree-sitter-ion;
       in
@@ -37,6 +37,6 @@
     in
     with utils.lib;
     {
-      overlay = pkgDefs.toOverlay;
+      overlays.default = final: prev: pkgDefs.toOverlay final prev;
     } // eachSystem defaultSystems out;
 }
